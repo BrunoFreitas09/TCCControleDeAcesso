@@ -80,8 +80,6 @@ namespace TCCControleDeAcesso.Views
             comboBoxPortas.Enabled = true;
         }
 
-        private void frmConfiguracoes_Load(object sender, EventArgs e)
-        {
-        }
+
     }
 }

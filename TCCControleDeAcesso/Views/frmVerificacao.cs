@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
 using TCCControleDeAcesso.Controllers;
 using TCCControleDeAcesso.Models;
 
@@ -12,17 +11,15 @@ namespace TCCControleDeAcesso.Views
 {
     public partial class frmVerificacao : Form
     {
-
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-
-                private static extern IntPtr CreateRoundRectRgn
+        private static extern IntPtr CreateRoundRectRgn
         (
-        int nLeft,
-        int nTop,
-        int nRight,
-        int nBottom,
-        int nWidthEllipse,
-        int nHeightEllipse
+            int nLeft,
+            int nTop,
+            int nRight,
+            int nBottom,
+            int nWidthEllipse,
+            int nHeightEllipse
         );
 
         bool verificando;
@@ -45,8 +42,13 @@ namespace TCCControleDeAcesso.Views
 
         private void btnVerificar_Click(object sender, EventArgs e)
         {
+            //while (verificando == true) < - vou começar a trabalhar aqui
+            //{
+
+            //} 
             try
             {
+                //quando nao esta verifivando
                 if (!verificando)
                 {
                     SerialPortManager.Port.Write("!verify#");
@@ -54,7 +56,9 @@ namespace TCCControleDeAcesso.Views
                     progressBarVerificar.Value = 100;
                     verificando = true;
                 }
-                else if (verificando)
+
+                //aqui é quando esta verifica
+                else
                 {
                     SerialPortManager.Port.Write("!a#");
                     btnVerificar.Text = "Verificar";
@@ -62,7 +66,7 @@ namespace TCCControleDeAcesso.Views
                     verificando = false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro");
             }
@@ -70,12 +74,12 @@ namespace TCCControleDeAcesso.Views
 
         private void CarregarImagemDoAluno(int id)
         {
-           
             string query = "SELECT foto FROM alunos WHERE id = @id";
+
             try
             {
                 Banco.OpenConnection();
-                Banco.Command = new MySqlCommand(query,Banco.Connection);
+                Banco.Command = new MySqlCommand(query, Banco.Connection);
                 Banco.Command.Parameters.AddWithValue("@id", id);
 
                 Banco.reader();
@@ -91,10 +95,8 @@ namespace TCCControleDeAcesso.Views
                 }
                 else
                 {
-                    pictureBox1.Image = null; // ou imagem padrão
+                    pictureBox1.Image = null; // imagem padrão caso não tenha
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -104,24 +106,21 @@ namespace TCCControleDeAcesso.Views
             {
                 Banco.CloseConnection();
             }
-
         }
 
         private void processReceived(string received)
         {
             if (received.StartsWith("!found"))
             {
-                received = received.Replace("!found", "");
-                received = received.Replace("#", "");
+                received = received.Replace("!found", "").Replace("#", "");
 
-                if (int.TryParse(received.Trim(), out idAluno))
-                {
-                }
+                if (int.TryParse(received.Trim(), out idAluno)) { }
 
                 verificacao = new Verificacao()
                 {
                     Id = idAluno
                 };
+
                 var dt = verificacao.select();
                 if (dt.Rows.Count > 0)
                 {
@@ -135,7 +134,6 @@ namespace TCCControleDeAcesso.Views
 
                 dataAtual = DateTime.Now;
 
-
                 try
                 {
                     log = new Log();
@@ -143,7 +141,9 @@ namespace TCCControleDeAcesso.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Erro ao Registrar Entrada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Erro ao Registrar Entrada",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                 }
             }
         }
@@ -176,39 +176,29 @@ namespace TCCControleDeAcesso.Views
             }
         }
 
-
-
-      
-
         private void frmVerificacao_Load(object sender, EventArgs e)
         {
-
-            btnVerificar.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, btnVerificar.Width, btnVerificar.Height, 20, 20));
+            btnVerificar.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnVerificar.Width, btnVerificar.Height, 20, 20));
             btnVerificar.FlatStyle = FlatStyle.Flat;
-            btnVerificar.FlatAppearance.BorderSize = 1;  // sem borda
-            btnVerificar.BackColor = Color.FromArgb(52, 188, 251); // #34BCFB
-            btnVerificar.ForeColor = Color.White; // texto branco
+            btnVerificar.FlatAppearance.BorderSize = 1;
+            btnVerificar.BackColor = Color.FromArgb(52, 188, 251);
+            btnVerificar.ForeColor = Color.White;
 
-            btnVoltar.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, btnVoltar.Width, btnVoltar.Height, 20, 20));
+            btnVoltar.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnVoltar.Width, btnVoltar.Height, 20, 20));
             btnVoltar.FlatStyle = FlatStyle.Flat;
-            btnVoltar.FlatAppearance.BorderSize = 1;  // sem borda
-            btnVoltar.BackColor = Color.FromArgb(52, 188, 251); // #34BCFB
-            btnVoltar.ForeColor = Color.White; // texto branco
-
+            btnVoltar.FlatAppearance.BorderSize = 1;
+            btnVoltar.BackColor = Color.FromArgb(52, 188, 251);
+            btnVoltar.ForeColor = Color.White;
         }
-
-    
 
         private void label1_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void btnVoltar_Click_1(object sender, EventArgs e)
         {
             if (SerialPortManager.Port != null && SerialPortManager.Port.IsOpen)
             {
-                // Remove o evento e envia o comando
                 SerialPortManager.Port.DataReceived -= serialPort_DataReceived;
 
                 try
@@ -231,13 +221,9 @@ namespace TCCControleDeAcesso.Views
                                 MessageBoxIcon.Information);
             }
 
-            // Continua a execução normalmente
             frmMainMenu check = new frmMainMenu(_CurrentUsername, id_escola);
             check.Show();
             Close();
-            
-
-            
         }
     }
 }

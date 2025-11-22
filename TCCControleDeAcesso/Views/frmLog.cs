@@ -32,10 +32,7 @@ namespace TCCControleDeAcesso.Views
 
         }
 
-        private void dgvLog_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
 
         private void frmLog_Load(object sender, EventArgs e)
         {

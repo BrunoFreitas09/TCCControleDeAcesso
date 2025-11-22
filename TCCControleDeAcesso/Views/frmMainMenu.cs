@@ -72,15 +72,6 @@ int nHeightEllipse
             label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //panel1.Height = b;
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void btnConfiguracoes_Click(object sender, EventArgs e)
         {
@@ -168,14 +159,6 @@ int nHeightEllipse
         }
 
         
-        private void label1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

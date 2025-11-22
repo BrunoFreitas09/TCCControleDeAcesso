@@ -134,11 +134,7 @@ namespace TCCControleDeAcesso.Views
             dgvAlunos.DataSource = cadastroAlunos.ListStudents();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-           
-         
-        }
+
 
         private void frmListaAlunos_Load(object sender, EventArgs e)
         {
@@ -214,10 +210,7 @@ namespace TCCControleDeAcesso.Views
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-           
-        }
+
 
         private void serialPort_DataReceived(object sender, EventArgs e)
         {
@@ -281,10 +274,7 @@ namespace TCCControleDeAcesso.Views
             Hide();
         }
 
-        private void dgvAlunos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
 
         private void BtnDelete_Click_1(object sender, EventArgs e)
         {
@@ -405,12 +395,6 @@ namespace TCCControleDeAcesso.Views
 
                 UpdateOrCreate = 0;
             }
-
-
-
-
-
-
 
 
             carregarGrid();
