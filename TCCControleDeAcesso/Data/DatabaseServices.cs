@@ -13,12 +13,17 @@ namespace TCCControleDeAcesso
     {
         public class AcessControl : DbContext
         {
+
+            public AcessControl() : base("name=AcessControl")
+            {
+            }
+
             public DbSet<Escola> escola { get; set; }
             public DbSet<CadastroAlunos> alunos { get; set; }
             public DbSet<Curso> cursos { get; set; }
             public DbSet<Entrada> entradas { get; set; }
             
-
+            
         }
 
     }

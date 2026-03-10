@@ -10,6 +10,7 @@ namespace TCCControleDeAcesso.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int idEscola { get; set; }
+        public virtual Escola Escola { get; set; }
     }
 
 }

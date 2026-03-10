@@ -17,7 +17,7 @@ namespace TCCControleDeAcesso.Views
 {
     public partial class frmCadastroCurso : Form
     {
-        Curso _curso = new Curso();
+        backup _curso = new backup();
         int id_escola;
         string idText;
         Login _login;
@@ -58,10 +58,10 @@ namespace TCCControleDeAcesso.Views
                 MessageBox.Show("Preencha o Campo", "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            _curso = new Curso()
-            {
-                Name = txtNome.Texts
-            };
+            //_curso = new Curso()
+            //{
+            //    Name = txtNome.Texts
+            //};
             _curso.Insert(id_escola);
             CarregarGrid();
             LimparCampos();
@@ -123,16 +123,16 @@ namespace TCCControleDeAcesso.Views
             else
             {
 
-                _curso = new Curso()
-                {
-                    Id = int.Parse(idText)
-                };
-                _curso.Delete();
+                //_curso = new Curso()
+                //{
+                //    Id = int.Parse(idText)
+                //};
+                //_curso.Delete();
 
-                _curso = new Curso()
-                {
-                    idEscola = id_escola
-                };
+                //_curso = new Curso()
+                //{
+                //    idEscola = id_escola
+                //};
                 dgvCursos.DataSource = _curso.ListCourses(id_escola);
                 dgvCursos.Columns["id"].Visible = false;
                 LimparCampos();
