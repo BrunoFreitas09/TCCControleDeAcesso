@@ -54,5 +54,12 @@ namespace TCCControleDeAcesso.Views
             this.Close();
             carregarGrid();
         }
+
+        // Adicionado: manipulador de evento ausente referenciado pelo Designer
+        private void dgvLog_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Implementação mínima para evitar o erro CS1061.
+            // Se quiser comportamento ao clicar em células, adicione aqui.
+        }
     }
 }
