@@ -1,91 +1,105 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
+using TCCControleDeAcesso.Data;
 using TCCControleDeAcesso.Models;
+using static TCCControleDeAcesso.Data.DbConnection;
+
 
 namespace TCCControleDeAcesso.Controllers
 {
     public class backup
     {
-   
+        
 
-        public void Insert(int _idEscola)
+        public void Insert(int _idEscola, string nome)
         {
-            var curso = new Curso();
-            try
+
+            using (var context = new AccessControl())
             {
-                Banco.OpenConnection();
-                Banco.Command = new MySqlCommand("insert into cursos(nome, idEscola) values(@Nome, @IdEscola)", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@Nome", curso.Name);
-                Banco.Command.Parameters.AddWithValue("@idEscola", _idEscola);
-                Banco.Command.ExecuteNonQuery();
-                Banco.CloseConnection();
+                var curso = new Curso()
+                {
+                    Name =  nome,
+                    idEscola = _idEscola
+                };
+                context.cursos.Add(curso);
+                context.SaveChanges();
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Inserir Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+
+
+            //var curso = new Curso();
+            //try
+            //{
+            //    Banco.OpenConnection();
+            //    Banco.Command = new MySqlCommand("insert into cursos(nome, idEscola) values(@Nome, @IdEscola)", Banco.Connection);
+            //    Banco.Command.Parameters.AddWithValue("@Nome", curso.Name);
+            //    Banco.Command.Parameters.AddWithValue("@idEscola", _idEscola);
+            //    Banco.Command.ExecuteNonQuery();
+            //    Banco.CloseConnection();
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message, "Erro Ao Inserir Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         public DataTable ListCourses(int _idEscola)
         {
-            try
-            {
-                Banco.OpenConnection();
-                Banco.Command = new MySqlCommand("select id, nome from cursos where idEscola=@idEscola", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@idEscola", _idEscola);
-                Banco.DataAdapter = new MySqlDataAdapter(Banco.Command);
-                Banco.datTable = new DataTable();
-                Banco.DataAdapter.Fill(Banco.datTable);
-                Banco.CloseConnection();
-                return Banco.datTable;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Listar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
+            //try
+            //{
+            //    Banco.OpenConnection();
+            //    Banco.Command = new MySqlCommand("select id, nome from cursos where idEscola=@idEscola", Banco.Connection);
+            //    Banco.Command.Parameters.AddWithValue("@idEscola", _idEscola);
+            //    Banco.DataAdapter = new MySqlDataAdapter(Banco.Command);
+            //    Banco.datTable = new DataTable();
+            //    Banco.DataAdapter.Fill(Banco.datTable);
+            //    Banco.CloseConnection();
+            //    return Banco.datTable;
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message, "Erro Ao Listar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return null;
+            //}
+            return null;
         }
 
         public void Delete()
         {
-            try
-            {
-                var curso = new Curso();
-                Banco.OpenConnection();
-                Banco.OpenConnection();
-                Banco.Command = new MySqlCommand("delete from cursos where id = @id", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@id", curso.Id);
-                Banco.Command.ExecuteNonQuery();
-                Banco.CloseConnection();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Deletar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            //    var curso = new Curso();
+            //    Banco.OpenConnection();
+            //    Banco.OpenConnection();
+            //    Banco.Command = new MySqlCommand("delete from cursos where id = @id", Banco.Connection);
+            //    Banco.Command.Parameters.AddWithValue("@id", curso.Id);
+            //    Banco.Command.ExecuteNonQuery();
+            //    Banco.CloseConnection();
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message, "Erro Ao Deletar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         public void Update()
         {
-            try
-            {
-                var curso = new Curso();
-                Banco.OpenConnection();
-                Banco.Command = new MySqlCommand("update Alunos set nome = @nome where id = @id", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@id", curso.Id);
-                Banco.Command.ExecuteNonQuery();
-                Banco.CloseConnection();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Atualizar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            //    var curso = new Curso();
+            //    Banco.OpenConnection();
+            //    Banco.Command = new MySqlCommand("update Alunos set nome = @nome where id = @id", Banco.Connection);
+            //    Banco.Command.Parameters.AddWithValue("@id", curso.Id);
+            //    Banco.Command.ExecuteNonQuery();
+            //    Banco.CloseConnection();
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message, "Erro Ao Atualizar Dados!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
     }
 }

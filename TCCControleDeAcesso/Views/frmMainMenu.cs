@@ -93,28 +93,28 @@ int nHeightEllipse
             Application.Exit();
         }
 
-        private string Backup(string arquivoDestino)
-        {
-            try
-            {
-                using (var cn = new MySqlConnection(DatabaseServices.Connection))
-                {
-                    cn.Open();
-                    using (var cmd = new MySqlCommand(null, cn))
-                    {
-                        using (var backupMysql = new MySqlBackup(cmd))
-                        {
-                            backupMysql.ExportToFile(arquivoDestino);
-                        }
-                    }
-                }
-                return "backup realizado";
-            }
-            catch (Exception ex)
-            {
-                return "Falha: " + ex.Message;
-            }
-        }
+        //private string Backup(string arquivoDestino)
+        //{
+        //    try
+        //    {
+        //        using (var cn = new MySqlConnection(DatabaseServices.Connection))
+        //        {
+        //            cn.Open();
+        //            using (var cmd = new MySqlCommand(null, cn))
+        //            {
+        //                using (var backupMysql = new MySqlBackup(cmd))
+        //                {
+        //                    backupMysql.ExportToFile(arquivoDestino);
+        //                }
+        //            }
+        //        }
+        //        return "backup realizado";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return "Falha: " + ex.Message;
+        //    }
+        //}
 
         private void btnVerificao_Click(object sender, EventArgs e)
         {

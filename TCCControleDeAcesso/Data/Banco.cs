@@ -20,114 +20,114 @@ namespace TCCControleDeAcesso.Models
         
 
 
-        public static void OpenConnection()
-        {
-            try
-            {
-                //Connection = new MySqlConnection(DatabaseServices.Connection);
-                //Na escola:
-                //pwd=etecjau
-                //port=3307
-                //uid=root
+        //public static void OpenConnection()
+        //{
+        //    try
+        //    {
+        //        //Connection = new MySqlConnection(DatabaseServices.Connection);
+        //        //Na escola:
+        //        //pwd=etecjau
+        //        //port=3307
+        //        //uid=root
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //        //Connection.Open();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show(e.Message, "Erro Ao Conectar com o Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        Console.WriteLine(e.ToString());
+        //    }
+        //}
 
+        //public static void reader() {
+        //    Reader = Command.ExecuteReader();
+        //}
 
-
-
-
-
-                Connection.Open();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Conectar com o Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Console.WriteLine(e.ToString());
-            }
-        }
-
-        public static void reader() {
-            Reader = Command.ExecuteReader();
-        }
-
-        public static void CloseConnection()
-        {
-            try
-            {
-                Connection.Close();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro Ao Fechar a Conexão com o Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        //public static void CloseConnection()
+        //{
+        //    try
+        //    {
+        //        Connection.Close();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show(e.Message, "Erro Ao Fechar a Conexão com o Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
      
-        public static void CreateDatabase()
-        {
-            try
-            {
-                //abre a conexão com o banco de dados
-                OpenConnection();
-
-
-
-                Command = new MySqlCommand("CREATE DATABASE IF NOT EXISTS AccessControl", Connection);
-
-                Command.ExecuteNonQuery();
-
-                Command = new MySqlCommand("use accesscontrol", Connection);
-
-
-
-                // Criação da tabela 'escolas'
-                Command = new MySqlCommand("create table if not exists escolas" +
-                    "(id integer auto_increment primary key," +
-                    "nome varchar(50)," +
-                    "email varchar(80)," +
-                    "senha varchar(250))", Connection);
-                Command.ExecuteNonQuery();
-
-                // Criação da tabela 'cursos'
-                Command = new MySqlCommand("create table if not exists cursos" +
-                    "(id integer primary key auto_increment," +
-                    "nome varchar(30)," +
-                    "idEscola int," +
-                    "foreign key (idEscola) references escolas (id))", Connection);
-                Command.ExecuteNonQuery();
-
-
-                // Criação da tabela 'alunos'
-                Command = new MySqlCommand("create table if not exists alunos " +
-                    "(id integer auto_increment primary key," +
-                    "nome varchar(50)," +
-                    "rm varchar(8)," +
-                    "idade char(3)," +
-                    "Curso varchar(30)," +
-                    "idEscola int," +
-                    "serie char(7)," +
-                    "foto longblob, " +
-                    "digital blob," +
-                    "foreign key (idEscola) references escolas (id))", Connection);
-                Command.ExecuteNonQuery();
-
-
-
-
-
-                // Criação da tabela 'entradas'
-                Command = new MySqlCommand("create table if not exists entradas " +
-                    "(id integer primary key auto_increment," +
-                    "idAluno int," +
-                    "nome varchar(100)," +
-                    "dataEntrada datetime," +
-                    "idEscola int," +                   
-                    "foreign key(idEscola) references escolas(id))", Connection);
-                Command.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Console.WriteLine(e.ToString());
-            }
-        }
+        //public static void CreateDatabase()
+        //{
+        //    try
+        //    {
+        //        //abre a conexão com o banco de dados
+        //        OpenConnection();
+        //
+        //
+        //
+        //        Command = new MySqlCommand("CREATE DATABASE IF NOT EXISTS AccessControl", Connection);
+        //
+        //        Command.ExecuteNonQuery();
+        //
+        //        Command = new MySqlCommand("use accesscontrol", Connection);
+        //
+        //
+        //        // Criação da tabela 'escolas'
+        //        Command = new MySqlCommand("create table if not exists escolas" +
+        //            "(id integer auto_increment primary key," +
+        //            "nome varchar(50)," +
+        //            "email varchar(80)," +
+        //            "senha varchar(250))", Connection);
+        //        Command.ExecuteNonQuery();
+        //
+        //        // Criação da tabela 'cursos'
+        //        Command = new MySqlCommand("create table if not exists cursos" +
+        //            "(id integer primary key auto_increment," +
+        //            "nome varchar(30)," +
+        //            "idEscola int," +
+        //            "foreign key (idEscola) references escolas (id))", Connection);
+        //        Command.ExecuteNonQuery();
+        //
+        //
+        //        // Criação da tabela 'alunos'
+        //        Command = new MySqlCommand("create table if not exists alunos " +
+        //            "(id integer auto_increment primary key," +
+        //            "nome varchar(50)," +
+        //            "rm varchar(8)," +
+        //            "idade char(3)," +
+        //            "Curso varchar(30)," +
+        //            "idEscola int," +
+        //            "serie char(7)," +
+        //            "foto longblob, " +
+        //            "digital blob," +
+        //            "foreign key (idEscola) references escolas (id))", Connection);
+        //        Command.ExecuteNonQuery();
+        //
+        //
+        //
+        //
+        //        // Criação da tabela 'entradas'
+        //        Command = new MySqlCommand("create table if not exists entradas " +
+        //            "(id integer primary key auto_increment," +
+        //            "idAluno int," +
+        //            "nome varchar(100)," +
+        //            "dataEntrada datetime," +
+        //            "idEscola int," +                  
+        //            "foreign key(idEscola) references escolas(id))", Connection);
+        //        Command.ExecuteNonQuery();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        Console.WriteLine(e.ToString());
+        //    }
+        //}
     }
 }

@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using TCCControleDeAcesso.Models;
+using TCCControleDeAcesso.Controllers;
 
 
-namespace TCCControleDeAcesso
+namespace TCCControleDeAcesso.Data
 {
     public class DbConnection
     {
-        public class AcessControl : DbContext
+        public class AccessControl : DbContext
         {
             public DbSet<Escola> escola { get; set; }
             public DbSet<CadastroAlunos> alunos { get; set; }

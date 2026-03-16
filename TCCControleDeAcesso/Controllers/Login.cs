@@ -1,13 +1,16 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using TCCControleDeAcesso.Data;
 using TCCControleDeAcesso.Models;
 using TCCControleDeAcesso.Views;
-using System.Data.SqlClient;
+using static TCCControleDeAcesso.Data.DbConnection;
 
 namespace TCCControleDeAcesso.Controllers
 {
@@ -29,33 +32,21 @@ namespace TCCControleDeAcesso.Controllers
         {
             try
             {
+                //Banco.Command = new MySqlCommand("select id from escolas where email=@email", Banco.Connection);
+                //Banco.Command.Parameters.AddWithValue("@email", email);
 
-
-                Banco.OpenConnection();
-
-
-                Banco.Command = new MySqlCommand("select id from escolas where email=@email", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@email", email);
-
-                using (MySqlDataReader reader = Banco.Command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        idEscola = reader.GetInt32("id"); // aqui era um GetInt32 antes
-                    }
-                }
-
-              
-                
-
+                //using (MySqlDataReader reader = Banco.Command.ExecuteReader())
+                //{
+                //    if (reader.Read())
+                //    {
+                //        idEscola = reader.GetInt32("id"); // aqui era um GetInt32 antes
+                //    }
+                //}
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro ao guardar o id ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Banco.CloseConnection(); 
             }
         }
 
@@ -63,35 +54,28 @@ namespace TCCControleDeAcesso.Controllers
         {
             try
             {
-                Banco.OpenConnection();
-
-                Banco.Command = new MySqlCommand("SELECT COUNT(*) FROM escolas WHERE email=@email", Banco.Connection);
-                Banco.Command.Parameters.AddWithValue("@email", email);
-                count = Convert.ToInt32(Banco.Command.ExecuteScalar());
-
-                if (count > 0)
+                using (var context = new AccessControl())
                 {
-                    // Busca apenas a senha (hash) direto
-                    using (var cmd = new MySqlCommand("SELECT senha FROM escolas WHERE email=@email LIMIT 1", Banco.Connection))
+                    var escola = context.escola
+                        .Where(e => e.Email == email)
+                        .Select(e => e.Senha)
+                        .FirstOrDefault();
+
+                    if (escola != null)
                     {
-                        cmd.Parameters.AddWithValue("@email", email);
-
-                        var result = cmd.ExecuteScalar();
-
-                        if (result != null)
-                        {
-                            HashBanco = result.ToString();
-                        }
+                        HashBanco = escola;
+                        count = 1;
+                    }
+                    else
+                    {
+                        count = 0;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro ao puxar a senha", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Banco.CloseConnection();
+                MessageBox.Show(ex.Message, "Erro ao guardar o id ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw ex;
             }
         }
 
