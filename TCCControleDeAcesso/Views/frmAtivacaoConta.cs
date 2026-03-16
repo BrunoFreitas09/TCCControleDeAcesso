@@ -103,7 +103,7 @@ namespace TCCControleDeAcesso.Views
                     Senha = txtSenha,
 
                 };
-                _cadastroEmpresas.Insert();
+                //_cadastroEmpresas.Insert();
 
                 frmLogin rp = new frmLogin();
                 rp.Show();
